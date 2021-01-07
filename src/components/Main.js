@@ -1,63 +1,56 @@
-import React from 'react'
-import api from '../utils/Api.js';
+import React, {useEffect} from 'react'
+import api from '../utils/api.js';
 import Card from "./Card.js";
 
-export default class Main extends React.Component {
-    constructor(props) {
-        super(props);
+function Main (props) {
+    const [userName, setUserName] = React.useState();
+    const [userDescription, setUserDescription] = React.useState();
+    const [userAvatar, setUserAvatar] = React.useState();
+    const [cards, setCards] = React.useState([]);
 
-        this.state = {
-            userName:'',
-            userDescription:'',
-            userAvatar:'',
-            cards: []
-        }
-    }
-
-    componentDidMount() {
+    useEffect(() => {
         Promise.all([api.getUserInfo(), api.getInitialCards()])
             .then(([user, cards]) => {
-                this.setState({
-                        userName: user.name,
-                        userDescription: user.about,
-                        userAvatar: user.avatar,
-                        cards: cards
-                    })
+                    setUserName(user.name);
+                    setUserDescription(user.about);
+                    setUserAvatar(user.avatar);
+                    setCards(cards);
             })
             .catch(() => {
                 console.log("Неизвестная ошибка, попробуйте еще раз");
             })
-    }
+    })
 
-    render(){
         return (
             <main className="content">
 
                 <section className="profile">
 
                     <div className="profile__info">
-                        <button className="profile__image-button" onClick={this.props.onEditAvatar}>
-                            <img src={this.state.userAvatar} alt="Жак-Ив Кусто" className="profile__image" />
+                        <button className="profile__image-button" onClick={props.onEditAvatar}>
+                            <img src={userAvatar} alt="Жак-Ив Кусто" className="profile__image" />
                         </button>
 
-                        <h1 className="profile__title">{this.state.userName}</h1>
-                        <button className="profile__edit-button" type="button" onClick={this.props.onEditProfile}></button>
-                        <p className="profile__subtitle">{this.state.userDescription}</p>
+                        <h1 className="profile__title">{userName}</h1>
+                        <button className="profile__edit-button" type="button" onClick={props.onEditProfile}></button>
+                        <p className="profile__subtitle">{userDescription}</p>
                     </div>
-                    <button className="profile__add-button" type="button" onClick={this.props.onAddPlace}></button>
+                    <button className="profile__add-button" type="button" onClick={props.onAddPlace}></button>
                 </section>
 
                 <section className="elements">
                     <ul className="elements__items">
-                        {this.state.cards.map((card) => {
+                        {cards.map((card) => {
                             return (
-                            <Card card={card} key={card._id} onCardClick={this.props.onCardClick}/>
+                            <Card card={card} key={card._id} onCardClick={props.onCardClick}/>
                             )
                         })}
                     </ul>
                 </section>
 
             </main>
-    )};
+    );
 }
+
+export default Main;
 
