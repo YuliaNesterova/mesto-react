@@ -25,6 +25,9 @@ function App() {
                setCurrentUser(userInfo);
                setCards(cards);
            })
+           .catch((res) =>  {
+               console.log(`Ошибка ${res.status}, попробуйте еще раз`);
+           });
    }, [])
 
     function handleEditAvatarClick() {
@@ -54,8 +57,8 @@ function App() {
             const newCards = cards.map((c) => c._id === card._id ? newCard : c);
             setCards(newCards);
         })
-            .catch(() => {
-                console.log("Неизвестная ошибка, попробуйте еще раз");
+            .catch((res) =>  {
+                console.log(`Ошибка ${res.status}, попробуйте еще раз`);
             });
     }
 
@@ -64,9 +67,9 @@ function App() {
             const newCards = cards.filter((item) => {return item._id !== card._id})
             setCards(newCards)
         })
-            .catch(() => {
-                console.log("Неизвестная ошибка, попробуйте еще раз");
-            })
+            .catch((res) =>  {
+                console.log(`Ошибка ${res.status}, попробуйте еще раз`);
+            });
     }
 
     function closeAllPopups() {
@@ -80,7 +83,10 @@ function App() {
        api.changeUserInfo(object).then((user) => {
            setCurrentUser(user);
            setIsEditProfilePopupOpen(false);
-       });
+       })
+           .catch((res) =>  {
+               console.log(`Ошибка ${res.status}, попробуйте еще раз`);
+           });
     }
 
     function handleUpdateAvatar(object) {
@@ -88,6 +94,9 @@ function App() {
            setCurrentUser(avatar);
            setIsEditAvatarPopupOpen(false);
        })
+           .catch((res) =>  {
+               console.log(`Ошибка ${res.status}, попробуйте еще раз`);
+           });
     }
 
     function handleAddPlace(object) {
@@ -96,6 +105,9 @@ function App() {
 
             setIsAddPlacePopupOpen(false);
         })
+            .catch((res) =>  {
+                console.log(`Ошибка ${res.status}, попробуйте еще раз`);
+            });
     }
 
   return (
