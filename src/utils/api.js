@@ -39,7 +39,7 @@ class Api {
             },
             body: JSON.stringify({
                 name: object.name,
-                about: object.profession
+                about: object.about
             })
         })
             .then((res) => this._getResponseData(res));
@@ -79,32 +79,32 @@ class Api {
                 'Content-Type': this._contentType
             },
             body: JSON.stringify({
-                avatar: object.user_pic
+                avatar: object.avatar
             })
         })
             .then((res) => this._getResponseData(res));
     }
 
-    putLike(id) {
-        return fetch(`${this._baseUrl}/cards/likes/${id}`, {
-            method: 'PUT',
-            headers: {
-                authorization: `${this._authorization}`,
-                'Content-Type': this._contentType
-            }
-        })
-            .then((res) => this._getResponseData(res));
-    }
-
-    deleteLike(id) {
-        return fetch(`${this._baseUrl}/cards/likes/${id}`, {
-            method: 'DELETE',
-            headers: {
-                authorization: `${this._authorization}`,
-                'Content-Type': this._contentType
-            }
-        })
-            .then((res) => this._getResponseData(res));
+    changeLikeCardStatus(id, isLiked) {
+        if(isLiked) {
+            return fetch(`${this._baseUrl}/cards/likes/${id}`, {
+                method: 'PUT',
+                headers: {
+                    authorization: `${this._authorization}`,
+                    'Content-Type': this._contentType
+                }
+            })
+                .then((res) => this._getResponseData(res));
+        } else {
+            return fetch(`${this._baseUrl}/cards/likes/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    authorization: `${this._authorization}`,
+                    'Content-Type': this._contentType
+                }
+            })
+                .then((res) => this._getResponseData(res));
+        }
     }
     }
 
