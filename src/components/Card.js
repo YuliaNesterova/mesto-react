@@ -26,8 +26,19 @@ export default function Card(props) {
         props.onCardDelete(props.card)
     }
 
+    function handleAuthorShow(e) {
+       e.target.previousSibling.classList.add("element__author_shown");
+    }
+
+    function handleAuthorHide(e) {
+        e.target.previousSibling.classList.remove("element__author_shown");
+    }
+
     return(
-        <li className="element">
+        <li className="element" key={props.card._id}>
+            <span className="element__author">{props.card.owner.name}</span>
+            <img src={props.card.owner.avatar} alt={props.card.owner.name} className="element__card-author"
+                 onMouseEnter={handleAuthorShow} onMouseLeave={handleAuthorHide}/>
             <img src={props.card.link} alt={props.card.name} className="element__image" onClick={handleClick}/>
             <button className={cardDeleteButtonClassName} onClick={handleDeleteClick}></button>
             <div className="element__description">

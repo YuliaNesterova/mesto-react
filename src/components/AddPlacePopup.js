@@ -15,15 +15,23 @@ export default function AddPlacePopup(props) {
 
     function handleSubmit(e) {
         e.preventDefault();
+
         props.onAddPlace(
             {
                 description, image
             }
-        );
+        )
     }
 
+    React.useEffect(() => {
+        if (!props.isOpen) {
+            setImage('');
+            setDescription('');
+        }
+    }, [props.isOpen]);
+
     return (
-        <PopupWithForm  isOpen={props.isOpen} onClose={props.onClose} onSubmit={handleSubmit} name={`add`} title={`Новое место`} text={`Сохранить`}>
+        <PopupWithForm  isOpen={props.isOpen} onClose={props.onClose} onSubmit={handleSubmit} name={`add`} title={`Новое место`} isSaving={props.isSaving}>
             <fieldset className="popup__field">
                 <input type="text" name="description" className="popup__input popup__input_type_description"
                        id="description-input"

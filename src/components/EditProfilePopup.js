@@ -32,8 +32,15 @@ export default function EditProfilePopup(props) {
         });
     }
 
+    React.useEffect(() => {
+        if (!props.isOpen) {
+            setName('');
+            setDescription('');
+        }
+    }, [props.isOpen]);
+
     return (
-        <PopupWithForm isOpen={props.isOpen} onClose={props.onClose} onSubmit={handleSubmit} name={`edit`} title={`Редактировать профиль`} text={`Сохранить`}>
+        <PopupWithForm isOpen={props.isOpen} onClose={props.onClose} onSubmit={handleSubmit} name={`edit`} title={`Редактировать профиль`} isSaving={props.isSaving}>
             <fieldset className="popup__field">
                 <input type="text" name="name" className="popup__input popup__input_type_title"
                        placeholder="Имя"
