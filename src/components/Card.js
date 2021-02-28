@@ -23,7 +23,7 @@ export default function Card(props) {
     }
 
     function handleDeleteClick() {
-        props.onCardDelete(props.card)
+        props.onDelete(props.card);
     }
 
     function handleAuthorShow(e) {
